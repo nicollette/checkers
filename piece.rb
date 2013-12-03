@@ -74,15 +74,16 @@ class Piece
   
   def perform_moves!(move_sequence)
     performed_move = true
-    
+    # MOVE WITHIN BOUNDS TO VALID MOVE SW=EQ
     if move_sequence.any? { |move| !@board.within_bounds?(move) }
       performed_move = false 
     elsif move_sequence.count == 1
       move = move_sequence.flatten
       
-      unless perform_slide(move)
-        performed_move = false unless perform_jump(move)
-      end
+      performed_move = perform_slide(move) || perform_jump(move)
+      # unless perform_slide(move)
+#         performed_move = false unless perform_jump(move)
+#       end
     else
       move_sequence.each do |move|
         performed_move = false unless perform_jump(move)

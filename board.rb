@@ -22,17 +22,17 @@ class Board
   
   def place_piece(piece, pos)
     self[pos] = piece
-    piece.pos = pos # ensures update of position when used in #move_piece
+    piece.pos = pos 
   end
   
   def move_piece(piece, move)
-    self[piece.pos] = nil #updates old pos on board to nil
-    place_piece(piece, move) # place piece at new pos
+    self[piece.pos] = nil 
+    place_piece(piece, move)
   end
   
   def remove_piece(piece)
-    self[piece.pos] = nil #removes piece from board
-    piece.pos = []  # sets piece's pos to []
+    self[piece.pos] = nil
+    piece.pos = []
   end
   
   def within_bounds?(pos)
@@ -40,6 +40,11 @@ class Board
     x.between?(0, 7) && y.between?(0, 7)
   end
   
+  def pieces
+    @rows.flatten.compact
+  end
+  
+  #render differently when kinged
   def display_board
     puts "  0  1  2  3  4  5  6  7"
     
@@ -93,41 +98,4 @@ class Board
       end
     end
   end
-end
-
-if __FILE__ == $PROGRAM_NAME
-  new_board = Board.new
-  new_board.display_board
-  pc = new_board[[2, 1]]
-
-  pc.perform_moves([[3, 2]])
-  puts "peform slide 1"
-  new_board.display_board
-  pc.perform_moves([[4, 1]])
-  new_board.display_board
-  
-  pc2 = new_board[[1, 2]]
-  pc2.perform_moves([[2, 1]])
-  new_board.display_board
-  
-  pc3 = new_board[[5, 2]]
-  pc3.perform_moves([[3, 0], [1, 2]])
-  new_board.display_board
-  
-  pc4 = new_board[[1, 0]]
-  pc4.perform_moves([[2, 1]])
-  new_board.display_board
-  
-  pc5 = new_board[[0, 1]]
-  pc5.perform_moves([[1, 0]])
-  new_board.display_board
-  
-  pc3.perform_moves([[0, 1]])
-  new_board.display_board
-
-  pc3.perform_moves([[1, 2]])
-  new_board.display_board
-  
-  pc3.perform_moves([[3, 4]])
-  new_board.display_board
 end
