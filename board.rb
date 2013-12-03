@@ -69,8 +69,8 @@ class Board
         pos = [row_idx, col_idx]
         next if self[pos].nil?
         color = self[pos].color
-        
-        Piece.new(pos, color, duped_board)
+        king = self[pos].king
+        Piece.new(pos, color, duped_board, king)
       end
     end
     duped_board
@@ -95,19 +95,39 @@ class Board
   end
 end
 
-new_board = Board.new
-new_board.display_board
-pc = new_board[[2, 1]]
+if __FILE__ == $PROGRAM_NAME
+  new_board = Board.new
+  new_board.display_board
+  pc = new_board[[2, 1]]
 
-pc.perform_slide([3, 2])
-puts "peform slide 1"
-new_board.display_board
+  pc.perform_moves([[3, 2]])
+  puts "peform slide 1"
+  new_board.display_board
+  pc.perform_moves([[4, 1]])
+  new_board.display_board
+  
+  pc2 = new_board[[1, 2]]
+  pc2.perform_moves([[2, 1]])
+  new_board.display_board
+  
+  pc3 = new_board[[5, 2]]
+  pc3.perform_moves([[3, 0], [1, 2]])
+  new_board.display_board
+  
+  pc4 = new_board[[1, 0]]
+  pc4.perform_moves([[2, 1]])
+  new_board.display_board
+  
+  pc5 = new_board[[0, 1]]
+  pc5.perform_moves([[1, 0]])
+  new_board.display_board
+  
+  pc3.perform_moves([[0, 1]])
+  new_board.display_board
 
-pc2 = new_board[[5, 2]]
-pc2.perform_slide([4, 3])
-puts "peform slide 2"
-new_board.display_board
-
-pc2.perform_jump([2, 1])
-puts "peform jump"
-new_board.display_board
+  pc3.perform_moves([[1, 2]])
+  new_board.display_board
+  
+  pc3.perform_moves([[3, 4]])
+  new_board.display_board
+end
