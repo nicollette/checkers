@@ -1,9 +1,3 @@
-class InvalidPieceError < StandardError
-end
-
-class NoPieceError < StandardError
-end
-
 require_relative 'board'
 
 class Game
@@ -31,9 +25,12 @@ class Game
         
         moves = @players[current_player].choose_moves
         selected_piece.perform_moves(moves)
-        
+      rescue ArgumentError => error
+        puts "Please enter a valid position (format: x, y)"
+        retry    
       rescue NoPieceError => error
         puts "There is no piece there."
+        retry
       rescue InvalidPieceError => error
         puts "You can't move the opponent's piece."
         puts "Please select a #{current_player} piece."

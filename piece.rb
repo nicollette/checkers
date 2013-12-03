@@ -1,6 +1,4 @@
-require 'debugger'
-class InvalidMoveError < StandardError
-end
+require_relative 'exceptions'
 
 class Piece
   attr_accessor :pos, :color, :board, :king
@@ -74,16 +72,10 @@ class Piece
   
   def perform_moves!(move_sequence)
     performed_move = true
-    # MOVE WITHIN BOUNDS TO VALID MOVE SW=EQ
-    if move_sequence.any? { |move| !@board.within_bounds?(move) }
-      performed_move = false 
-    elsif move_sequence.count == 1
+
+    if move_sequence.count == 1
       move = move_sequence.flatten
-      
       performed_move = perform_slide(move) || perform_jump(move)
-      # unless perform_slide(move)
-#         performed_move = false unless perform_jump(move)
-#       end
     else
       move_sequence.each do |move|
         performed_move = false unless perform_jump(move)
@@ -97,6 +89,9 @@ class Piece
     duped_piece = @board.dup_board[@pos]
     
     begin
+      if move_sequence.any? { |move| !@board.within_bounds?(move) }
+        raise InvalidMoveError
+      end
       duped_piece.perform_moves!(move_sequence)
     rescue InvalidMoveError => error
       puts "~~~ Invalid Move ~~~"

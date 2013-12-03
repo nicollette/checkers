@@ -43,8 +43,7 @@ class Board
   def pieces
     @rows.flatten.compact
   end
-  
-  #render differently when kinged
+
   def display_board
     puts "  0  1  2  3  4  5  6  7"
     
@@ -55,10 +54,16 @@ class Board
         pos = [row_idx, col_idx]
         if self[pos].nil?
           print "___"
+        elsif self[pos].king
+          if self[pos].color == :red
+            print "K◉_"
+          else
+            print "K◎_"
+          end
         elsif self[pos].color == :red
-          print "◉__"
+            print "◉__"
         else
-          print "◎__"
+            print "◎__"
         end
       end
       
