@@ -10,7 +10,6 @@ class Game
   end
   
   def play
-    
     while true
       begin
         puts
@@ -26,7 +25,7 @@ class Game
         moves = @players[current_player].choose_moves
         selected_piece.perform_moves(moves)
       rescue ArgumentError => error
-        puts "Please enter a valid position (format: x, y)"
+        puts "Please enter a valid position (format: y-axis, x-axis)"
         retry    
       rescue NoPieceError => error
         puts "There is no piece there."
@@ -58,7 +57,6 @@ class Game
 end
 
 class HumanPlayer
-  
   def choose_moves
     moves = []
     

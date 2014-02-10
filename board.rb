@@ -19,30 +19,6 @@ class Board
     x, y = pos
     @rows[x][y] = piece
   end
-  
-  def place_piece(piece, pos)
-    self[pos] = piece
-    piece.pos = pos 
-  end
-  
-  def move_piece(piece, move)
-    self[piece.pos] = nil 
-    place_piece(piece, move)
-  end
-  
-  def remove_piece(piece)
-    self[piece.pos] = nil
-    piece.pos = []
-  end
-  
-  def within_bounds?(pos)
-    x, y = pos
-    x.between?(0, 7) && y.between?(0, 7)
-  end
-  
-  def pieces
-    @rows.flatten.compact
-  end
 
   def display_board
     puts "  0  1  2  3  4  5  6  7"
@@ -84,6 +60,30 @@ class Board
       end
     end
     duped_board
+  end
+  
+  def move_piece(piece, move)
+    self[piece.pos] = nil 
+    place_piece(piece, move)
+  end
+  
+  def pieces
+    @rows.flatten.compact
+  end
+  
+  def place_piece(piece, pos)
+    self[pos] = piece
+    piece.pos = pos 
+  end
+  
+  def remove_piece(piece)
+    self[piece.pos] = nil
+    piece.pos = []
+  end
+  
+  def within_bounds?(pos)
+    x, y = pos
+    x.between?(0, 7) && y.between?(0, 7)
   end
   
   protected
